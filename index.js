@@ -20,18 +20,21 @@ function fileFilter(req, file, cb){
   if(file.mimetype == 'image/png' || file.mimetype == 'image/jpeg'){
     return cb(null, true);
   }
-  cb(null, false);
+  cb(new Error('Khong dung dinh dang file'));
 }
 
-var upload = multer({storage, fileFilter});
+var upload = multer({storage, fileFilter}).single('avatar');
 
-app.post('/xulydangky', upload.single('avatar'), (req, res) => {
-  var {username} = req.body;
-  var {filename, size, mimetype} = req.file;
-  res.send(
-    `Username: ${username}
-    filename: ${filename}
-    size: ${size}
-    mimetype: ${mimetype}`
-  );
+app.post('/xulydangky', (req, res) => {
+  upload(req, res, err => {
+    if(err) return res.send('Loi upload ' + err);
+    var {username} = req.body;
+    var {filename, size, mimetype} = req.file;
+    res.send(
+      `Username: ${username}
+      filename: ${filename}
+      size: ${size}
+      mimetype: ${mimetype}`
+    );
+  });
 });
