@@ -18,5 +18,10 @@ var storage = multer.diskStorage({
 var upload = multer({storage});
 
 app.post('/xulydangky', upload.single('avatar'), (req, res) => {
-  
+  var {username} = req.body;
+  var {filename} = req.file;
+  res.send(
+    `Username: ${username}
+    filename: ${filename}`
+  );
 });
