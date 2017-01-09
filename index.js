@@ -15,13 +15,23 @@ var storage = multer.diskStorage({
     cb(null, Date.now() + file.originalname)
   }
 });
-var upload = multer({storage});
+
+function fileFilter(req, file, cb){
+  if(file.mimetype == 'image/png' || file.mimetype == 'image/jpeg'){
+    return cb(null, true);
+  }
+  cb(null, false);
+}
+
+var upload = multer({storage, fileFilter});
 
 app.post('/xulydangky', upload.single('avatar'), (req, res) => {
   var {username} = req.body;
-  var {filename} = req.file;
+  var {filename, size, mimetype} = req.file;
   res.send(
     `Username: ${username}
-    filename: ${filename}`
+    filename: ${filename}
+    size: ${size}
+    mimetype: ${mimetype}`
   );
 });
