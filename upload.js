@@ -17,5 +17,8 @@ function fileFilter(req, file, cb){
 var limits = {
   fileSize: 10000
 }
-var upload = multer({storage, fileFilter, limits}).single('avatar');
-module.exports = upload;
+
+function getUpload(fieldname){
+  return multer({storage, fileFilter, limits}).single(fieldname);
+}
+module.exports = getUpload;

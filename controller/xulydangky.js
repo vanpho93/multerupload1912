@@ -1,4 +1,4 @@
-var upload = require('./upload.js');
+var upload = require('../upload.js')('avatar');
 module.exports = (req, res) => {
   upload(req, res, err => {
     if(err) return res.send('Loi upload ' + err);
