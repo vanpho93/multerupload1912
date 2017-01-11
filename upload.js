@@ -21,4 +21,8 @@ var limits = {
 function getUpload(fieldname){
   return multer({storage, fileFilter, limits}).single(fieldname);
 }
-module.exports = getUpload;
+
+function getArrayUpload (fieldname){
+  return multer({storage, fileFilter, limits}).array(fieldname);
+}
+module.exports = {getUpload ,getArrayUpload};
