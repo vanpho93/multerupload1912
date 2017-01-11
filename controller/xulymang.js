@@ -1,3 +1,6 @@
+var upload = require('../upload.js')('hinhsanpham');
 module.exports = (req, res) => {
-  res.send('Hello');
+  upload(req, res, err => {
+    res.send('San pham: ' + req.body.tenSanPham + '\n'+req.file.filename)
+  });
 };
